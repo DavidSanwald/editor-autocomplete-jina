@@ -122,7 +122,8 @@
               "type": "string"
             },
             "max_idle_time": {
-              "type": "integer"
+              "type": "integer",
+              "description": "necessary time of inactivity, to set is_idle to true"
             },
             "log_sse": {
               "type": "boolean"
