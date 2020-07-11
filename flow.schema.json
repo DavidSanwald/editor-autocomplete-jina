@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON Schema for jina-ai yaml files",
+  "description": "Dockerfile linter, validate inline bash, written in Haskell",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "with": { "type": "object" },
+    "pods": {
+      "type": "object",
+      "patternProperties": {
+        "^.*$": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "yaml_path": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "entrypoint": {
+              "type": "string"
+            },
+            "pull_latest": {
+              "type": "boolean"
+            },
+            "volumes": {
+              "type": "string"
+            },
+            "port_in": {
+              "type": "integer"
+            },
+            "port_out": {
+              "type": "integer"
+            },
+            "host_in": {
+              "type": "string"
+            },
+            "host_out": {
+              "type": "string"
+            },
+            "socket_in": {
+              "type": "string",
+              "enum": [
+                "PULL_BIND",
+                "PULL_CONNECT",
+                "PUSH_BIND",
+                "PUSH_CONNECT",
+                "SUB_BIND",
+                "SUB_CONNECT",
+                "PUB_BIND",
+                "PUB_CONNECT",
+                "PAIR_BIND",
+                "PAIR_CONNECT",
+                "ROUTER_BIND",
+                "DEALER_CONNECT"
+              ]
+            },
+            "socket_out": {
+              "type": "string",
+              "enum": [
+                "PULL_BIND",
+                "PULL_CONNECT",
+                "PUSH_BIND",
+                "PUSH_CONNECT",
+                "SUB_BIND",
+                "SUB_CONNECT",
+                "PUB_BIND",
+                "PUB_CONNECT",
+                "PAIR_BIND",
+                "PAIR_CONNECT",
+                "ROUTER_BIND",
+                "DEALER_CONNECT"
+              ]
+            },
+            "port_ctrl": {
+              "type": "integer"
+            },
+            "ctrl_with_ipc": {
+              "type": "boolean"
+            },
+            "timeout": {
+              "type": "integer"
+            },
+            "timeout_ctrl": {
+              "type": "integer"
+            },
+            "timeout_ready": {
+              "type": "integer"
+            },
+            "dump_interval": {
+              "type": "integer"
+            },
+            "exit_no_dump": {
+              "type": "boolean"
+            },
+            "read_only": {
+              "type": "boolean"
+            },
+            "separated_workspace": {
+              "type": "boolean"
+            },
+            "replica_id": {
+              "type": "integer"
+            },
+            "check_version": {
+              "type": "boolean"
+            },
+            "array_in_pb": {
+              "type": "boolean"
+            },
+            "num_part": {
+              "type": "integer"
+            },
+            "memory_hwm": {
+              "type": "integer"
+            },
+            "runtime": {
+              "type": "string"
+            },
+            "max_idle_time": {
+              "type": "integer"
+            },
+            "log_sse": {
+              "type": "boolean"
+            },
+            "log_remote": {
+              "type": "boolean"
+            },
+            "log_profile": {
+              "type": "boolean"
+            },
+            "host": {
+              "type": "string"
+            },
+            "port_grpc": {
+              "type": "integer"
+            },
+            "max_message_size": {
+              "type": "integer"
+            },
+            "proxy": {
+              "type": "boolean"
+            },
+            "replicas": {
+              "type": "integer"
+            },
+            "replica_type": {
+              "type": "string"
+            },
+            "shutdown_idle": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
+}
