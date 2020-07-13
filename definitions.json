@@ -1,0 +1,228 @@
+{
+  "podProperties": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "the name of this pea, used to identify the pod and its logs."
+      },
+      "identity": {
+        "type": "string",
+        "description": "the identity of the sockets, default a random string"
+      },
+      "yaml_path": {
+        "type": "string",
+        "description": "removing redundant routers from the flow. Note, this may change the gateway zmq socket to BIND                             and hence not allow multiple clients connected to the gateway at the same time."
+      },
+      "py_modules": {
+        "type": "string",
+        "description": "the customized python modules need to be imported before loading the executor"
+      },
+      "image": {
+        "type": "string",
+        "description": "the name of the docker image that this pea runs with. it is also served as an indicator of containerization. when this and --yaml-path are both given then the docker image is used and its original yaml configuration is replaced by the given --yaml-path"
+      },
+      "entrypoint": {
+        "type": "string",
+        "description": "the entrypoint command overrides the ENTRYPOINT in docker image. when not set then the docker image ENTRYPOINT takes effective."
+      },
+      "pull_latest": {
+        "type": "boolean",
+        "description": "pull the latest image before running"
+      },
+      "volumes": {
+        "type": "string",
+        "description": "the path on the host to be mounted inside the container. they will be mounted to the root path, i.e. /user/test/my-workspace will be mounted to /my-workspace inside the container. all volumes are mounted with read-write mode."
+      },
+      "port_in": {
+        "type": "integer",
+        "description": "port for input data, default a random port between [49152, 65535]"
+      },
+      "port_out": {
+        "type": "integer",
+        "description": "port for output data, default a random port between [49152, 65535]"
+      },
+      "host_in": {
+        "type": "string",
+        "description": "host address for input, by default it is 0.0.0.0"
+      },
+      "host_out": {
+        "type": "string",
+        "description": "host address for output, by default it is 0.0.0.0"
+      },
+      "socket_in": {
+        "type": "string",
+        "description": "socket type for input port",
+        "enum": [
+          "PULL_BIND",
+          "PULL_CONNECT",
+          "PUSH_BIND",
+          "PUSH_CONNECT",
+          "SUB_BIND",
+          "SUB_CONNECT",
+          "PUB_BIND",
+          "PUB_CONNECT",
+          "PAIR_BIND",
+          "PAIR_CONNECT",
+          "ROUTER_BIND",
+          "DEALER_CONNECT"
+        ]
+      },
+      "socket_out": {
+        "type": "string",
+        "description": "socket type for output port",
+        "enum": [
+          "PULL_BIND",
+          "PULL_CONNECT",
+          "PUSH_BIND",
+          "PUSH_CONNECT",
+          "SUB_BIND",
+          "SUB_CONNECT",
+          "PUB_BIND",
+          "PUB_CONNECT",
+          "PAIR_BIND",
+          "PAIR_CONNECT",
+          "ROUTER_BIND",
+          "DEALER_CONNECT"
+        ]
+      },
+      "port_ctrl": {
+        "type": "integer",
+        "description": "port for controlling the pod, default a random port between [49152, 65535]"
+      },
+      "ctrl_with_ipc": {
+        "type": "boolean",
+        "description": "use ipc protocol for control socket"
+      },
+      "timeout": {
+        "type": "integer",
+        "description": "timeout (ms) of all requests, -1 for waiting forever"
+      },
+      "timeout_ctrl": {
+        "type": "integer",
+        "description": "timeout (ms) of the control request, -1 for waiting forever"
+      },
+      "timeout_ready": {
+        "type": "integer",
+        "description": "timeout (ms) of a pea is ready for request, -1 for waiting forever"
+      },
+      "dump_interval": {
+        "type": "integer",
+        "description": "serialize the model in the pod every n seconds if model changes. -1 means --read-only. "
+      },
+      "exit_no_dump": {
+        "type": "boolean",
+        "description": "do not serialize the model when the pod exits"
+      },
+      "read_only": {
+        "type": "boolean",
+        "description": "do not allow the pod to modify the model, dump_interval will be ignored"
+      },
+      "separated_workspace": {
+        "type": "boolean",
+        "description": "the data and config files are separated for each pea in this pod, only effective when BasePod's `replicas` > 1"
+      },
+      "replica_id": {
+        "type": "integer",
+        "description": "the id of the storage of this replica, only effective when `separated_workspace=True`"
+      },
+      "check_version": {
+        "type": "boolean",
+        "description": "comparing the jina and proto version of incoming message with local setup, mismatch raise an exception"
+      },
+      "array_in_pb": {
+        "type": "boolean",
+        "description": "sending buffer and numpy ndarray together within or separately from the protobuf message, the latter often yields a better network efficiency"
+      },
+      "compress_hwm": {
+        "type": "integer",
+        "description": "the high watermark that triggers the message compression. message bigger than this HWM (in bytes) will be compressed by lz4 algorithm.set this to -1 to disable this feature."
+      },
+      "compress_lwm": {
+        "type": "number",
+        "description": "the low watermark that enables the sending of a compressed message. compression rate (after_size/before_size) lower than this LWM will be considered as successeful compression, and will be sent. Otherwise, it will send the original message without compression"
+      },
+      "num_part": {
+        "type": "integer",
+        "description": "==SUPPRESS=="
+      },
+      "role": {
+        "type": "string",
+        "description": "the role of this pea in a pod",
+        "enum": ["REPLICA", "HEAD", "TAIL", "SHARD", "SINGLETON"]
+      },
+      "skip_on_error": {
+        "type": "string",
+        "description": "skip strategy on error message. ",
+        "enum": ["NONE", "EXECUTOR", "DRIVER", "HANDLE", "CALLBACK"]
+      },
+      "memory_hwm": {
+        "type": "integer",
+        "description": "memory high watermark of this pod in Gigabytes, pod will restart when this is reached. -1 means no restriction"
+      },
+      "runtime": {
+        "type": "string",
+        "description": "the parallel runtime of the pod",
+        "enum": ["thread", "process"]
+      },
+      "max_idle_time": {
+        "type": "integer",
+        "description": "label this pea as inactive when it does not process any request after certain time (in second)"
+      },
+      "log_sse": {
+        "type": "boolean",
+        "description": "turn on server-side event logging"
+      },
+      "log_remote": {
+        "type": "boolean",
+        "description": "turn on remote logging"
+      },
+      "log_profile": {
+        "type": "boolean",
+        "description": "turn on the profiling logger"
+      },
+      "log_with_own_name": {
+        "type": "boolean",
+        "description": "turn on to let each logger outputs in its own name (i.e. parent class name as the context), by default it is off so all logs from the same pod will have the same prefix. turn on to help debugging, turn off to have more clear logs and better grouping in dashboard"
+      },
+      "host": {
+        "type": "string",
+        "description": "host address of the pea/gateway, by default it is 0.0.0.0."
+      },
+      "port_expose": {
+        "type": "integer",
+        "description": "host port of the gateway, \"port-grpc\" alias will be removed in future versions"
+      },
+      "max_message_size": {
+        "type": "integer",
+        "description": "maximum send and receive size for grpc server in bytes, -1 means unlimited"
+      },
+      "proxy": {
+        "type": "boolean",
+        "description": "respect the http_proxy and https_proxy environment variables. otherwise, it will unset these proxy variables before start. gRPC seems to prefer --no-proxy"
+      },
+      "replicas": {
+        "type": "integer",
+        "description": "number of parallel peas in the pod running at the same time (i.e. replicas), `port_in` and `port_out` will be set to random, and routers will be added automatically when necessary"
+      },
+      "polling": {
+        "type": "string",
+        "description": "ANY: only one (whoever is idle) replica polls the message; ALL: all workers poll the message (like a broadcast)",
+        "enum": ["ANY", "ALL", "ALL_ASYNC"]
+      },
+      "scheduling": {
+        "type": "string",
+        "description": "the strategy of scheduling workload among peas",
+        "enum": ["LOAD_BALANCE", "ROUND_ROBIN"]
+      },
+      "reducing_yaml_path": {
+        "type": "string",
+        "description": "the executor used for reducing the result from all replicas, accepted type follows \"--yaml-path\""
+      },
+      "shutdown_idle": {
+        "type": "boolean",
+        "description": "shutdown this pod when all peas are idle"
+      }
+    }
+  }
+}
